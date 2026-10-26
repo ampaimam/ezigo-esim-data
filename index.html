@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ezigo eSIM — plan data feed</title>
+<style>
+  :root{--navy:#071f3d;--blue:#174f8c;--red:#c8102e;--ink:#1b3047;--muted:#6c7d8c;--line:#dde5ee}
+  *{box-sizing:border-box}
+  body{margin:0;background:#f8fafc;color:var(--ink);
+       font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:760px;margin:0 auto;padding:64px 24px 80px}
+  .rule{width:56px;height:4px;background:var(--red);margin-bottom:24px}
+  h1{margin:0 0 10px;font-size:30px;line-height:1.25;color:var(--navy);letter-spacing:-.01em}
+  .sub{margin:0 0 36px;color:var(--muted)}
+  h2{margin:36px 0 12px;font-size:17px;color:var(--navy);letter-spacing:.02em;
+     text-transform:uppercase}
+  .file{border:1px solid var(--line);background:#fff;border-left:4px solid var(--blue);
+        border-radius:6px;padding:16px 18px;margin:0 0 12px}
+  .file a{color:var(--blue);font-weight:600;text-decoration:none;
+          border-bottom:1px solid rgba(23,79,140,.35);word-break:break-all}
+  .file p{margin:6px 0 0;color:var(--muted);font-size:14px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;background:#fff}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--navy);color:#fff;font-weight:600}
+  tbody tr:nth-child(even) td{background:#f7faff}
+  code{background:#eef3f9;padding:1px 5px;border-radius:4px;font-size:13.5px}
+  .note{border-left:4px solid var(--red);background:#fff6f7;padding:14px 16px;
+        margin:24px 0;font-size:14.5px;border-radius:0 6px 6px 0}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+         color:var(--muted);font-size:13.5px}
+  footer a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="rule"></div>
+  <h1>Ezigo eSIM — plan data feed</h1>
+  <p class="sub">Machine-readable price and allowance data for travel eSIM plans, published for price-comparison and directory partners.</p>
+
+  <h2>Files</h2>
+  <div class="file">
+    <a href="ezigo-esim-plans-single-country.json">ezigo-esim-plans-single-country.json</a>
+    <p>2,651 single-country plans across 200 destinations · updated 2026-10-22 · USD</p>
+  </div>
+
+  <h2>Access</h2>
+  <table>
+    <thead><tr><th>Endpoint</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>https://ampaimam.github.io/ezigo-esim-data/ezigo-esim-plans-single-country.json</code></td>
+        <td>Primary. Served with <code>Cache-Control: max-age=600</code>.</td>
+      </tr>
+      <tr>
+        <td><code>https://raw.githubusercontent.com/ampaimam/ezigo-esim-data/main/ezigo-esim-plans-single-country.json</code></td>
+        <td>Fallback. No cache, but rate limited to 60 requests/hour per IP for unauthenticated clients.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    Neither endpoint is behind bot protection. <strong>No special User-Agent or request header is required</strong> — a plain <code>requests.get()</code> or <code>http.Get()</code> works. The response is gzip-compressed (about 55&nbsp;KB on the wire instead of 1.7&nbsp;MB), so keep <code>Accept-Encoding: gzip</code> enabled.
+  </div>
+
+  <h2>Schema</h2>
+  <p>Top level: <code>provider</code>, <code>generated</code>, <code>currency</code>, <code>note</code>, <code>plans</code>. Each record carries destination, plan type, allowances, throttle behaviour, validity, price, network and hotspot flag. See the <a href="https://github.com/ampaimam/ezigo-esim-data#schema">repository README</a> for the full field list.</p>
+
+  <footer>
+    Contact: <a href="mailto:service@ejesim.com">service@ejesim.com</a> · <a href="https://ejesim.com/">ejesim.com</a>
+  </footer>
+</div>
+</body>
+</html>
