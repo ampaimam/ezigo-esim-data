@@ -41,7 +41,7 @@
   <h2>Files</h2>
   <div class="file">
     <a href="ezigo-esim-plans-single-country.json">ezigo-esim-plans-single-country.json</a>
-    <p>2,651 single-country plans across 200 destinations · updated 2026-10-22 · USD</p>
+    <p id="feed-meta">Single-country plans across 200 destinations · priced in USD</p>
   </div>
 
   <h2>Access</h2>
@@ -70,5 +70,26 @@
     Contact: <a href="mailto:service@ejesim.com">service@ejesim.com</a> · <a href="https://ejesim.com/">ejesim.com</a>
   </footer>
 </div>
+<script>
+/* Fill the record count and snapshot date from the feed itself, so this page
+   never shows a stale number. Falls back to the static line above if the
+   request fails or JavaScript is off. */
+(function () {
+  var el = document.getElementById('feed-meta');
+  if (!el || !window.fetch) return;
+  fetch('ezigo-esim-plans-single-country.json')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.plans || !d.plans.length) return;
+      var dest = {};
+      d.plans.forEach(function (p) { dest[p.destination_name] = 1; });
+      el.textContent =
+        d.plans.length.toLocaleString('en-US') + ' single-country plans across ' +
+        Object.keys(dest).length + ' destinations · snapshot ' + d.generated +
+        ' · ' + d.currency;
+    })
+    .catch(function () { /* keep the static fallback */ });
+})();
+</script>
 </body>
 </html>
